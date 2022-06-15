@@ -9,12 +9,11 @@ from json import dumps
 from collections import namedtuple
 from dataclasses import dataclass, field
 from typing import Generator, Union
-from random import randint
 
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from keras import backend, Input
+from keras import backend
 from ruamel.yaml import YAML
 
 from tensorflow import test

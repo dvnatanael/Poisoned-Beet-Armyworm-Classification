@@ -50,7 +50,7 @@ def test_split_all():
         if os.path.realpath(path) == os.path.realpath(save_path):
             continue
         dirname = os.path.split(path)[-1]
-        for i, output_image in enumerate(split_all(path), 1):
+        for i, output_image in enumerate(split_all(path), 6):
             prefix, suffix = divmod(i, 6)
             output_filename = f"{dirname}_{prefix:04d}{suffix}.jpg"
             plt.imsave(os.path.join(save_path, output_filename), output_image)

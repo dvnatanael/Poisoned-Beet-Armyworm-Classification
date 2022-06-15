@@ -1,0 +1,40 @@
+logger:
+  line_length: 79
+--- # image loader
+label_mode: categorical
+batch_size: 32
+image_size:
+  - 256
+  - 256
+seed: 20220610
+validation_split: 0.1
+--- # model
+model:
+  loss: categorical_crossentropy
+  optimizer: Adadelta
+fit:
+  epochs: 200
+  verbose: 2
+  load_existing: False
+callbacks:
+  reduce lr on plateau:
+    monitor: val_loss
+    factor: 0.7
+    min_lr: 1e-8
+    patience: 5
+    verbose: 1
+    cooldown: 10
+  early stop:
+    monitor: val_loss
+    min_delta: 1e-8
+    patience: 30
+    verbose: 1
+    mode: auto
+    baseline:  # None
+    restore_best_weights: False
+--- # optimizers
+Adam:
+Adadelta:
+  learning_rate: 1.
+  rho: 0.995
+  epsilon: 1e-7
