@@ -103,7 +103,7 @@ def save_model(model: tf.keras.Model, save_path: str = None) -> None:
 
     # save model architecture as json
     with open(f'{filename}.json', 'w') as f:
-        f.write(json.dumps(model.to_json(), indent=4))
+        f.writelines(json.dumps(model.to_json(), indent=4))
         logger.info('Model architecture saved successfully.')
 
     # save model weights as h5
@@ -137,16 +137,16 @@ def plot_train_history(history: tf.keras.callbacks.History) -> plt.Figure:
     """Plot the model training hisotry."""
 
     def plotter(metric: str):
-        ax.plot(history.history[metric], label=f'train')
+        ax.semilogy(history.history[metric], label=f'train')
         try:
-            ax.plot(history.history[f'val_{metric}'], label=f'validation')
+            ax.semilogy(history.history[f'val_{metric}'], label=f'validation')
         except KeyError:
             pass
         ax.set_ylabel(metric.title())
         ax.set_xlabel('Epoch')
         ax.legend(loc='upper left')
 
-    rows = cols = int(np.ceil(len(history.history)))
+    rows = cols = int(np.ceil(np.sqrt(len(history.history))))
     fig: plt.Figure = plt.figure(figsize=(12, 8))
     gs: plt.GridSpec = fig.add_gridspec(rows, cols)
     for i, key in enumerate([k for k in history.history if 'val' not in k]):
