@@ -59,7 +59,7 @@ class RecordWriter(Callback):
         msg = ' - '.join([
             f'{time_elapsed}s',
             *(f'{k}: {v}' for k, v in logs.items())])
-        for msg in itertools.chain(record, [msg]):
+        for msg in itertools.chain([msg], record):
             logger.debug(msg)
         record = []
 
@@ -68,7 +68,7 @@ class RecordWriter(Callback):
     def on_train_end(self, logs=None):
         global record
         for msg in record:
-            logger.debug(record)
+            logger.debug(msg)
         record = []
         logger.info(
             f'Training finished. Model was trained for {self.epoch} epochs.')
